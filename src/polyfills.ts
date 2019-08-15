@@ -58,6 +58,22 @@
 import 'zone.js/dist/zone';  // Included with Angular CLI.
 
 
+declare global {
+  interface Window {
+    AnalysysAgent: {
+      identify(id: string);
+      track(eventName: string, profiles?: Record<string, any>);
+      profileSetOnce(propertyName: string, propertyValue?: any);
+      profileSet(propertyName: string, propertyValue?: any);
+    };
+
+    zhuge: {
+      identify(id: string, profiles?: Record<string, any>);
+      track(eventName: string, profiles?: Record<string, any>);
+    };
+  }
+}
+
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */

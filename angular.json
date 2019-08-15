@@ -29,7 +29,9 @@
             "styles": [
               "src/styles.sass"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/AnalysysAgent_JS_SDK.min.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {
@@ -162,6 +164,41 @@
             "tsConfig": [
               "projects/ng-csv/tsconfig.lib.json",
               "projects/ng-csv/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ng-template": {
+      "root": "projects/ng-template",
+      "sourceRoot": "projects/ng-template/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ng-template/tsconfig.lib.json",
+            "project": "projects/ng-template/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-template/src/test.ts",
+            "tsConfig": "projects/ng-template/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-template/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-template/tsconfig.lib.json",
+              "projects/ng-template/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

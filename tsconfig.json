@@ -24,6 +24,12 @@
       ],
       "ng-csv/*": [
         "dist/ng-csv/*"
+      ],
+      "ng-template": [
+        "dist/ng-template"
+      ],
+      "ng-template/*": [
+        "dist/ng-template/*"
       ]
     }
   }

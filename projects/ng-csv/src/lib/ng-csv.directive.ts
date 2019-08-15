@@ -1,8 +1,6 @@
 import { Directive, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { parse, ParseConfig, Parser, ParseResult } from 'papaparse';
-import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { publishReplay } from 'rxjs/operators';
-import { listener } from '@angular/core/src/render3';
+import { parse, ParseConfig, ParseResult } from 'papaparse';
+import { Observable, Subject } from 'rxjs';
 
 const createInput = (): HTMLInputElement => {
   const input = document.createElement('input');
@@ -23,7 +21,7 @@ export class NgCsvDirective {
   } as ParseConfig;
 
   @Output()
-  load: EventEmitter<Observable<any[]>> = new EventEmitter();
+  upload: EventEmitter<Observable<any[]>> = new EventEmitter();
 
   constructor(private el: ElementRef) {
   }
@@ -48,7 +46,7 @@ export class NgCsvDirective {
   send() {
     const inputElement = createInput();
     const subject = new Subject<any[]>();
-    this.load.emit(subject);
+    this.upload.emit(subject);
     const changeListener = this.onFileSelect(inputElement, subject);
     inputElement.addEventListener('change', changeListener);
     (this.el.nativeElement as HTMLElement).parentElement.appendChild(inputElement);

@@ -1,24 +1,45 @@
 # NgCsv
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.0.
+### Import Module
+```typescript
+import { NgCsvModule } from '@qlee/ng-csv';
 
-## Code scaffolding
+@NgModule({
+  declarations: [],
+  imports: [ NgCsvModule ],
+  providers: [],
+  bootstrap: []
+})
+export class AppModule { }
+```
 
-Run `ng generate component component-name --project ng-csv` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ng-csv`.
-> Note: Don't forget to add `--project ng-csv` or else it will be added to the default project in your `angular.json` file. 
+### Upload csv
 
-## Build
+```html
+<button ngCsv (upload)="upload($event)">选择文件</button>
+```
 
-Run `ng build ng-csv` to build the project. The build artifacts will be stored in the `dist/` directory.
+```typescript
+class Component {
+  upload(data: Observable<any>) {
+      data.pipe(
+        scan((all: string[], row: any[]) => [...all, row], [])
+      ).subscribe(rows => this.data = rows);
+    }
+}
+```
 
-## Publishing
+### Download
 
-After building your library with `ng build ng-csv`, go to the dist folder `cd dist/ng-csv` and run `npm publish`.
+```typescript
+import { of } from 'rxjs';
+import { NgCsvService } from '@qlee/ng-csv';
 
-## Running unit tests
-
-Run `ng test ng-csv` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+class Component {
+  constructor(private ngCsvService: NgCsvService) {}
+  
+  download() {
+      this.ngCsvService.download('test.csv', of({ name: 1, age: '222,asd' }, { name: 2 }));
+  }
+}
+```
