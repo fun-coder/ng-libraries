@@ -1,5 +1,5 @@
 import { Component, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { bufferCount, map, scan } from 'rxjs/operators';
 import { NgCsvService } from '../../projects/ng-csv/src/lib/ng-csv.service';
 
@@ -27,6 +27,13 @@ export class AppComponent {
   }
 
   download() {
-    this.ngCsvService.download('test.csv', of({ name: 1, age: '222,asd' }, { name: 2 }));
+    const rows$ = new Subject();
+    this.ngCsvService.download('test.csv', rows$);
+    let i = 0;
+    while (i < 1000000) {
+      rows$.next({ name: `n-${ i }`, age: '222,asd' });
+      i++;
+    }
+    rows$.complete();
   }
 }
